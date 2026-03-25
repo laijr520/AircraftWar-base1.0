@@ -1,0 +1,29 @@
+﻿@startuml
+'HeroAircraft Singleton Pattern'
+
+class AbstractAircraft {
+    # maxHp:int
+    # hp:int
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + {abstract} shoot():List<BaseBullet>
+}
+
+class HeroAircraft {
+    - static volatile HeroAircraft heroAircraft
+    - shootNum:int
+    - power:int
+    - direction:int
+
+    + static getHeroAircraft():HeroAircraft
+    + static getHeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp):HeroAircraft
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+}
+
+AbstractAircraft <|-- HeroAircraft
+
+
+@enduml

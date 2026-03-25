@@ -11,6 +11,9 @@ import java.util.List;
  * @author hitsz
  */
 public class HeroAircraft extends AbstractAircraft {
+    //静态引用自身
+    private static volatile HeroAircraft heroAircraft = null;
+
 
     //每次射击发射子弹数量
     private int shootNum = 1;
@@ -21,7 +24,37 @@ public class HeroAircraft extends AbstractAircraft {
     //子弹射击方向 (向上发射：-1，向下发射：1)
     private int direction = -1;
 
-    public HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
+    public static HeroAircraft getHeroAircraft() {
+        if (heroAircraft == null) {
+            synchronized(HeroAircraft.class) {
+                if (heroAircraft == null) {
+                    heroAircraft = new HeroAircraft(
+                            0, 0, 0, 0, 100);
+                }
+            }
+            return heroAircraft;
+        }
+        //TODO:remove
+        System.console().printf("英雄机重复生成！\n");
+        return heroAircraft;
+    }
+
+    public static HeroAircraft getHeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
+        if (heroAircraft == null) {
+            synchronized(HeroAircraft.class) {
+                if (heroAircraft == null) {
+                    heroAircraft = new HeroAircraft(
+                            locationX, locationY, speedX, speedY, hp);
+                }
+            }
+            return heroAircraft;
+        }
+        //TODO:remove
+        System.console().printf("英雄机重复生成！\n");
+        return heroAircraft;
+    }
+
+    private HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
 
