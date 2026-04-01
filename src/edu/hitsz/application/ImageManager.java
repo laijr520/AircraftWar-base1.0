@@ -44,14 +44,11 @@ public class ImageManager {
     public static BufferedImage ELITE_PLUS_ENEMY_IMAGE;
     public static BufferedImage ELITE_PRO_ENEMY_IMAGE;
     public static BufferedImage BOSS_ENEMY_IMAGE;
-<<<<<<< HEAD
-=======
     //道具图片
     public static BufferedImage PROP_BLOOD_IMAGE;
     public static BufferedImage PROP_BULLET_IMAGE;
     public static BufferedImage PROP_BOMB_IMAGE;
     public static BufferedImage PROP_BULLET_PLUS_IMAGE;
->>>>>>> c356893a525c54af5c0762556926e92274d67a3c
 
     static {
         try {
