@@ -180,73 +180,39 @@ public class Game extends JPanel {
     private void CreatePropAction(EnemyTypeEnum type, int Locationx, int Locationy) {
         double rand_prop_type = Math.random();
         double rand_if_create = Math.random();
+        double createProbability = getCreateProbability(type);
+        int speedY = getPropSpeedY(type);
+
+        if (rand_if_create < createProbability) {
+            PropTypeEnum propType = getRandomPropType(rand_prop_type);
+            props.add(PropFactory.createProp(propType, Locationx, Locationy, 0, speedY));
+        }
+    }
+
+    private double getCreateProbability(EnemyTypeEnum type) {
         switch (type) {
-            case MOB:
-                if (rand_if_create < 0.2) {
-                    if(rand_prop_type < 0.25) {
-                        props.add(new PropBlood(Locationx, Locationy, 0, 5));
-                    } else if (rand_prop_type < 0.5) {
-                        props.add(new PropBullet(Locationx, Locationy, 0, 5));
-                    } else if (rand_prop_type < 0.75) {
-                        props.add(new PropBomb(Locationx, Locationy, 0, 5));
-                    } else {
-                        props.add(new PropBulletPlus(Locationx, Locationy, 0, 5));
-                    }
-                }
-                break;
-            case ELITE:
-                if (rand_if_create < 0.4) {
-                    if(rand_prop_type < 0.25) {
-                        props.add(new PropBlood(Locationx, Locationy, 0, 2));
-                    } else if (rand_prop_type < 0.5) {
-                        props.add(new PropBullet(Locationx, Locationy, 0, 2));
-                    } else if (rand_prop_type < 0.75) {
-                        props.add(new PropBomb(Locationx, Locationy, 0, 2));
-                    } else {
-                        props.add(new PropBulletPlus(Locationx, Locationy, 0, 2));
-                    }
-                }
-                break;
-            case ELITEPRO:
-                if (rand_if_create < 0.5) {
-                    if(rand_prop_type < 0.25) {
-                        props.add(new PropBlood(Locationx, Locationy, 0, 2));
-                    } else if (rand_prop_type < 0.5) {
-                        props.add(new PropBullet(Locationx, Locationy, 0, 2));
-                    } else if (rand_prop_type < 0.75) {
-                        props.add(new PropBomb(Locationx, Locationy, 0, 2));
-                    } else {
-                        props.add(new PropBulletPlus(Locationx, Locationy, 0, 2));
-                    }
-                }
-                break;
-            case ELITEPLUS:
-                if (rand_if_create < 0.7) {
-                    if(rand_prop_type < 0.25) {
-                        props.add(new PropBlood(Locationx, Locationy, 0, 2));
-                    } else if (rand_prop_type < 0.5) {
-                        props.add(new PropBullet(Locationx, Locationy, 0, 2));
-                    } else if (rand_prop_type < 0.75) {
-                        props.add(new PropBomb(Locationx, Locationy, 0, 2));
-                    } else {
-                        props.add(new PropBulletPlus(Locationx, Locationy, 0, 2));
-                    }
-                }
-                break;
-            case BOSS:
-                if (rand_if_create < 2) {
-                    if(rand_prop_type < 0.25) {
-                        props.add(new PropBlood(Locationx, Locationy, 0, 2));
-                    } else if (rand_prop_type < 0.5) {
-                        props.add(new PropBullet(Locationx, Locationy, 0, 2));
-                    } else if (rand_prop_type < 0.75) {
-                        props.add(new PropBomb(Locationx, Locationy, 0, 2));
-                    } else {
-                        props.add(new PropBulletPlus(Locationx, Locationy, 0, 2));
-                    }
-                }
-                break;
-            default:break;
+            case MOB: return 0.2;
+            case ELITE: return 0.4;
+            case ELITEPRO: return 0.5;
+            case ELITEPLUS: return 0.7;
+            case BOSS: return 2.0; // 总是创建
+            default: return 0.0;
+        }
+    }
+
+    private int getPropSpeedY(EnemyTypeEnum type) {
+        return type == EnemyTypeEnum.MOB ? 5 : 2;
+    }
+
+    private PropTypeEnum getRandomPropType(double rand) {
+        if (rand < 0.25) {
+            return PropTypeEnum.BLOOD;
+        } else if (rand < 0.5) {
+            return PropTypeEnum.BULLET;
+        } else if (rand < 0.75) {
+            return PropTypeEnum.BOMB;
+        } else {
+            return PropTypeEnum.BULLET_PLUS;
         }
     }
 
