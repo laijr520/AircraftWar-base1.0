@@ -1,9 +1,8 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.strategy.BulletStrategy;
+import edu.hitsz.strategy.AbstractBulletStrategy;
 import edu.hitsz.strategy.NoBulletStrategy;
-import edu.hitsz.strategy.SingleBulletStrategy;
 import edu.hitsz.basic.AbstractFlyingObject;
 import java.util.List;
 
@@ -18,9 +17,8 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     protected int hp;
 
     // 子弹发射策略,允许继承类可见
-    protected BulletStrategy bulletStrategy = new NoBulletStrategy();// 默认不发射子弹
-
-
+    protected AbstractBulletStrategy bulletStrategy = new NoBulletStrategy();// 默认不发射子弹
+    
     public AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY);
         this.hp = hp;
@@ -46,7 +44,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         return hp;
     }
 
-    public void setBulletStrategy(BulletStrategy bulletStrategy) {
+    public void setBulletStrategy(AbstractBulletStrategy bulletStrategy) {
         this.bulletStrategy = bulletStrategy;
     }
 
@@ -58,6 +56,8 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      *  非可射击对象空实现，返回空列表
      */
     public abstract List<BaseBullet> shoot();
+
+
 
 }
 

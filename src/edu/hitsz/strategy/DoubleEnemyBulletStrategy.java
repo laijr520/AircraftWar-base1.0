@@ -7,7 +7,7 @@ import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
 
-public class DoubleBulletStrategy implements BulletStrategy {
+public class DoubleEnemyBulletStrategy implements AbstractBulletStrategy {
     @Override
     public List<BaseBullet> fire(AbstractAircraft aircraft) {
         List<BaseBullet> bullets = new LinkedList<>();

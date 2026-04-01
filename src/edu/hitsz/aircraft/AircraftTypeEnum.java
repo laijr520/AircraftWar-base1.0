@@ -6,5 +6,6 @@ public enum AircraftTypeEnum {
     ELITE,
     ELITEPRO,
     ELITEPLUS,
-    BOSS
+    BOSS,
+    HERO
 }

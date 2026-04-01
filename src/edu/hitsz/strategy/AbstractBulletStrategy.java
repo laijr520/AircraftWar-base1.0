@@ -4,7 +4,7 @@ import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.bullet.BaseBullet;
 
 import java.util.List;
-public interface BulletStrategy {
+public interface AbstractBulletStrategy {
     List<BaseBullet> fire(AbstractAircraft aircraft);
 }
 

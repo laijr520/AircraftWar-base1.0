@@ -5,8 +5,7 @@ import java.util.List;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.strategy.DoubleBulletStrategy;
-import edu.hitsz.strategy.SingleBulletStrategy;
+import edu.hitsz.strategy.DoubleEnemyBulletStrategy;
 
 public class EliteProEnemy extends AbstractAircraft
 {
@@ -21,7 +20,7 @@ public class EliteProEnemy extends AbstractAircraft
 
     public EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
-        setBulletStrategy(new DoubleBulletStrategy());
+        setBulletStrategy(new DoubleEnemyBulletStrategy());
     }
 
     @Override
@@ -33,7 +32,7 @@ public class EliteProEnemy extends AbstractAircraft
         }
     }
 
-@Override
+    @Override
     /**
      * 通过射击产生子弹
      * @return 射击出的子弹List
@@ -45,5 +44,4 @@ public class EliteProEnemy extends AbstractAircraft
             return new LinkedList<>();
         }
     }
-    
 }

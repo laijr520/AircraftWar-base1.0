@@ -2,6 +2,15 @@
 'https://plantuml.com/class-diagram
 
 abstract class AbstractFlyingObject {
+    + int locationX
+    + int locationY
+    + int speedX
+    + int speedY
+    + forward(): void
+    + vanish(): void
+}
+
+abstract class AbstractFlyingObject {
     # locationX:int
     # locationY:int
     # speedX:int
@@ -26,8 +35,10 @@ abstract class AbstractFlyingObject {
 }
 
 abstract class AbstractAircraft {
-    + int maxHp
-    + int hp
+    # int maxHp
+    # int hp
+    # BulletStrategy bulletStrategy:BulletStrategy
+
     + decreaseHp(int decrease): void
     + increaseHp(int increase): void
     + getHp(): int
@@ -74,14 +85,7 @@ class BossEnemy {
     + shoot(): List<BaseBullet>
 }
 
-abstract class AbstractFlyingObject {
-    + int locationX
-    + int locationY
-    + int speedX
-    + int speedY
-    + forward(): void
-    + vanish(): void
-}
+
 
 class BaseBullet{
     - power:int
@@ -97,6 +101,22 @@ class EnemyBullet {
     + EnemyBullet(int locationX, int locationY, int speedX, int speedY, int power)
 }
 
+interface BulletStrategy {
+    + abstract fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+
+class NoBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+class SingleBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+class DoubleBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+class TripleBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
 
 AbstractFlyingObject <|-- AbstractAircraft
 AbstractFlyingObject <|-- BaseBullet
@@ -107,6 +127,12 @@ AbstractAircraft <|-- EliteEnemy
 AbstractAircraft <|-- EliteProEnemy
 AbstractAircraft <|-- ElitePlusEnemy
 AbstractAircraft <|-- BossEnemy
+
+BulletStrategy <|.. NoBulletStrategy
+BulletStrategy <|.. SingleBulletStrategy
+BulletStrategy <|.. DoubleBulletStrategy
+BulletStrategy <|.. TripleBulletStrategy
+BulletStrategy <--o AbstractAircraft
 
 BaseBullet <|-- HeroBullet
 BaseBullet <|-- EnemyBullet
