@@ -5,20 +5,20 @@ import java.util.List;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.bullet.EnemyBullet;
 
-public class EliteEnemy extends AbstractAircraft
+public class EliteProEnemy extends AbstractAircraft
 {
-        //每次射击发射子弹数量
-    private int shootNum = 1;
+    //每次射击发射子弹数量
+    private int shootNum = 2;
 
     //子弹威力
-    private int power = 10;
+    private int power = 30;
 
     //子弹射击方向 (向上发射：-1，向下发射：1)
     private int direction = 1;
 
-    public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
+    public EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
 
@@ -31,7 +31,7 @@ public class EliteEnemy extends AbstractAircraft
         }
     }
 
-    @Override
+@Override
     /**
      * 通过射击产生子弹
      * @return 射击出的子弹List
@@ -46,10 +46,10 @@ public class EliteEnemy extends AbstractAircraft
         for(int i=0; i<shootNum; i++){
             // 子弹发射位置相对飞机位置向前偏移
             // 多个子弹横向分散
-            bullet = new HeroBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
+            bullet = new EnemyBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
             res.add(bullet);
         }
         return res;
     }
-
+    
 }
