@@ -28,6 +28,13 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         }
     }
 
+    public void increaseHp(int increase){
+        hp += increase;
+        if(hp > maxHp){
+            hp = maxHp;
+        }
+    }
+
     public int getHp() {
         return hp;
     }

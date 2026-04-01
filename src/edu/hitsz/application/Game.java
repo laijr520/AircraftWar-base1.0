@@ -4,6 +4,7 @@ import edu.hitsz.aircraft.*;
 import edu.hitsz.aircraft.Factory.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.prop.BaseProp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,7 @@ public class Game extends JPanel {
     private final List<AbstractAircraft> enemyAircrafts;
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
+    private final List<BaseProp> props;
 
     //屏幕中出现的敌机最大数量
     private final int enemyMaxNumber = 5;
@@ -64,6 +66,7 @@ public class Game extends JPanel {
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
         enemyBullets = new LinkedList<>();
+        props = new LinkedList<>();
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -221,6 +224,45 @@ public class Game extends JPanel {
                                 break;
                             case "EliteProEnemy":
                                 EliteProEnemyKillCount++;
+<<<<<<< HEAD
+=======
+                                // 产生道具补给
+                                 if (Math.random() < 1) {
+                                    // 30%概率产生道具
+                                    BaseProp prop;
+                                    double rand = Math.random();
+                                    if (rand < 0.25) {
+                                        prop = new edu.hitsz.prop.PropBlood(
+                                                enemyAircraft.getLocationX(),
+                                                enemyAircraft.getLocationY(),
+                                                0,
+                                                2
+                                        );
+                                    } else if (rand < 0.5) {
+                                        prop = new edu.hitsz.prop.PropBullet(
+                                                enemyAircraft.getLocationX(),
+                                                enemyAircraft.getLocationY(),
+                                                0,
+                                                2
+                                        );
+                                    } else if (rand < 0.75) {
+                                        prop = new edu.hitsz.prop.PropBomb(
+                                                enemyAircraft.getLocationX(),
+                                                enemyAircraft.getLocationY(),
+                                                0,
+                                                2
+                                        );
+                                    } else {
+                                        prop = new edu.hitsz.prop.PropBulletPlus(
+                                                enemyAircraft.getLocationX(),
+                                                enemyAircraft.getLocationY(),
+                                                0,
+                                                2
+                                        );
+                                    }
+                                    props.add(prop);
+                                }
+>>>>>>> c356893a525c54af5c0762556926e92274d67a3c
                                 break;
                             case "ElitePlusEnemy":
                                 ElitePlusEnemyKillCount++;
@@ -240,6 +282,17 @@ public class Game extends JPanel {
         }
 
         // Todo: 我方获得道具，道具生效
+        for (BaseProp prop : props) {
+            if (prop.notValid()) {
+                continue;
+            }
+            if (heroAircraft.crash(prop)) {
+                // 英雄机撞击到道具
+                // 道具生效
+                prop.effect(heroAircraft);
+                prop.vanish();
+            }
+        }
 
     }
 
