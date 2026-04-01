@@ -224,6 +224,11 @@ public class Game extends JPanel {
                                 break;
                             case "EliteProEnemy":
                                 EliteProEnemyKillCount++;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 3077e336e6cbacce01dad3c55ab60f13b404d40a
                                 // 产生道具补给
                                  if (Math.random() < 1) {
                                     // 30%概率产生道具
@@ -260,6 +265,10 @@ public class Game extends JPanel {
                                     }
                                     props.add(prop);
                                 }
+<<<<<<< HEAD
+=======
+>>>>>>> c356893a525c54af5c0762556926e92274d67a3c
+>>>>>>> 3077e336e6cbacce01dad3c55ab60f13b404d40a
                                 break;
                             case "ElitePlusEnemy":
                                 ElitePlusEnemyKillCount++;
