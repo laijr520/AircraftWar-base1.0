@@ -1,6 +1,7 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
+import edu.hitsz.aircraft.Factory.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 
@@ -44,6 +45,13 @@ public class Game extends JPanel {
     //当前玩家分数
     private int score = 0;
 
+    //击败敌机数
+    private int MobEnemyKillCount = 0;
+    private int EliteEnemyKillCount = 0;
+    private int EliteProEnemyKillCount = 0;
+    private int ElitePlusEnemyKillCount = 0;
+    private int BossEnemyKillCount = 0;
+
     //游戏结束标志
     private boolean gameOverFlag = false;
 
@@ -64,6 +72,23 @@ public class Game extends JPanel {
 
     }
 
+    private EnemyFactory getFactory(EnemyTypeEnum type) {
+        switch (type) {
+            case MOB:
+                return new MobEnemyFactory();
+            case ELITE:
+                return new EliteEnemyFactory();
+            case ELITEPRO:
+                return new EliteProEnemyFactory();
+            case ELITEPLUS:
+                return new ElitePlusEnemyFactory();
+            case BOSS:
+                return new BossEnemyFactory();
+            default:
+                return new MobEnemyFactory();
+        }
+    }
+
     /**
      * 游戏启动入口，执行游戏逻辑
      */
@@ -77,9 +102,14 @@ public class Game extends JPanel {
                 enemySpawnCounter++;
                 if (enemySpawnCounter >=enemySpawnCycle) {
                     enemySpawnCounter = 0;
-                    // 产生普通敌机
+                    // 产生敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
-                        enemyAircrafts.add(new MobEnemy(
+                        EnemyTypeEnum type = EnemyTypeEnum.MOB;
+                        if (score >= 50*(EliteProEnemyKillCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof EliteProEnemy)) {
+                            type = EnemyTypeEnum.ELITEPRO;
+                        }
+                        EnemyFactory factory = getFactory(type);
+                        enemyAircrafts.add(factory.createEnemy(
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
                                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
                                 0,
@@ -121,6 +151,9 @@ public class Game extends JPanel {
             //英雄机射击
             heroBullets.addAll(heroAircraft.shoot());
             // TODO 敌机射击
+            for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+                enemyBullets.addAll(enemyAircraft.shoot());
+            }
         }
     }
 
@@ -148,6 +181,17 @@ public class Game extends JPanel {
      */
     private void crashCheckAction() {
         // TODO 敌机子弹攻击英雄机
+        for (BaseBullet bullet : enemyBullets) {
+            if (bullet.notValid()) {
+                continue;
+            }
+            if (heroAircraft.crash(bullet)) {
+                // 英雄机撞击到敌机子弹
+                // 英雄机损失一定生命值
+                heroAircraft.decreaseHp(bullet.getPower());
+                bullet.vanish();
+            }
+        }
 
         // 英雄子弹攻击敌机
         for (BaseBullet bullet : heroBullets) {
@@ -168,6 +212,23 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
                         score += 10;
+                        switch (enemyAircraft.getClass().getSimpleName()) {
+                            case "MobEnemy":
+                                MobEnemyKillCount++;
+                                break;
+                            case "EliteEnemy":
+                                EliteEnemyKillCount++;
+                                break;
+                            case "EliteProEnemy":
+                                EliteProEnemyKillCount++;
+                                break;
+                            case "ElitePlusEnemy":
+                                ElitePlusEnemyKillCount++;
+                                break;
+                            case "BossEnemy":
+                                BossEnemyKillCount++;
+                                break;
+                        }
                     }
                 }
                 // 英雄机 与 敌机 相撞，均损毁
