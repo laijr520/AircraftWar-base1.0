@@ -4,7 +4,7 @@ import edu.hitsz.aircraft.*;
 import edu.hitsz.aircraft.Factory.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.prop.BaseProp;
+import edu.hitsz.prop.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,11 +48,11 @@ public class Game extends JPanel {
     private int score = 0;
 
     //击败敌机数
-    private int MobEnemyKillCount = 0;
-    private int EliteEnemyKillCount = 0;
-    private int EliteProEnemyKillCount = 0;
-    private int ElitePlusEnemyKillCount = 0;
-    private int BossEnemyKillCount = 0;
+    private int MobEnemyCount = 0;
+    private int EliteEnemyCount = 0;
+    private int EliteProEnemyCount = 0;
+    private int ElitePlusEnemyCount = 0;
+    private int BossEnemyCount = 0;
 
     //游戏结束标志
     private boolean gameOverFlag = false;
@@ -78,17 +78,35 @@ public class Game extends JPanel {
     private EnemyFactory getFactory(EnemyTypeEnum type) {
         switch (type) {
             case MOB:
-                return new MobEnemyFactory();
+                {
+                    MobEnemyCount++;
+                    return new MobEnemyFactory();
+                }
             case ELITE:
-                return new EliteEnemyFactory();
+                {
+                    EliteEnemyCount++;
+                    return new EliteEnemyFactory();
+                }
             case ELITEPRO:
-                return new EliteProEnemyFactory();
+                {
+                    EliteProEnemyCount++;
+                    return new EliteProEnemyFactory();
+                }
             case ELITEPLUS:
-                return new ElitePlusEnemyFactory();
+                {
+                    ElitePlusEnemyCount++;
+                    return new ElitePlusEnemyFactory();
+                }
             case BOSS:
-                return new BossEnemyFactory();
+                {
+                    BossEnemyCount++;
+                    return new BossEnemyFactory();
+                }
             default:
-                return new MobEnemyFactory();
+                {
+                    MobEnemyCount++;
+                    return new MobEnemyFactory();
+                }
         }
     }
 
@@ -108,8 +126,18 @@ public class Game extends JPanel {
                     // 产生敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         EnemyTypeEnum type = EnemyTypeEnum.MOB;
-                        if (score >= 50*(EliteProEnemyKillCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof EliteProEnemy)) {
+
+                        if (score >= 50*(EliteEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof EliteEnemy)) {
+                            type = EnemyTypeEnum.ELITE;
+                        }
+                        if (score >= 90*(EliteProEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof EliteProEnemy)) {
                             type = EnemyTypeEnum.ELITEPRO;
+                        }
+                        if (score >= 170*(ElitePlusEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof ElitePlusEnemy)) {
+                            type = EnemyTypeEnum.ELITEPLUS;
+                        }
+                        if (score >= 300*(BossEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof BossEnemy)) {
+                            type = EnemyTypeEnum.BOSS;
                         }
                         EnemyFactory factory = getFactory(type);
                         enemyAircrafts.add(factory.createEnemy(
@@ -128,6 +156,8 @@ public class Game extends JPanel {
                 bulletsMoveAction();
                 // 飞机移动
                 aircraftsMoveAction();
+                // 道具移动
+                propsMoveAction();
                 // 撞击检测
                 crashCheckAction();
                 // 后处理
@@ -146,6 +176,79 @@ public class Game extends JPanel {
     //***********************
     //      Action 各部分
     //***********************
+
+    private void CreatePropAction(EnemyTypeEnum type, int Locationx, int Locationy) {
+        double rand_prop_type = Math.random();
+        double rand_if_create = Math.random();
+        switch (type) {
+            case MOB:
+                if (rand_if_create < 0.2) {
+                    if(rand_prop_type < 0.25) {
+                        props.add(new PropBlood(Locationx, Locationy, 0, 5));
+                    } else if (rand_prop_type < 0.5) {
+                        props.add(new PropBullet(Locationx, Locationy, 0, 5));
+                    } else if (rand_prop_type < 0.75) {
+                        props.add(new PropBomb(Locationx, Locationy, 0, 5));
+                    } else {
+                        props.add(new PropBulletPlus(Locationx, Locationy, 0, 5));
+                    }
+                }
+                break;
+            case ELITE:
+                if (rand_if_create < 0.4) {
+                    if(rand_prop_type < 0.25) {
+                        props.add(new PropBlood(Locationx, Locationy, 0, 2));
+                    } else if (rand_prop_type < 0.5) {
+                        props.add(new PropBullet(Locationx, Locationy, 0, 2));
+                    } else if (rand_prop_type < 0.75) {
+                        props.add(new PropBomb(Locationx, Locationy, 0, 2));
+                    } else {
+                        props.add(new PropBulletPlus(Locationx, Locationy, 0, 2));
+                    }
+                }
+                break;
+            case ELITEPRO:
+                if (rand_if_create < 0.5) {
+                    if(rand_prop_type < 0.25) {
+                        props.add(new PropBlood(Locationx, Locationy, 0, 2));
+                    } else if (rand_prop_type < 0.5) {
+                        props.add(new PropBullet(Locationx, Locationy, 0, 2));
+                    } else if (rand_prop_type < 0.75) {
+                        props.add(new PropBomb(Locationx, Locationy, 0, 2));
+                    } else {
+                        props.add(new PropBulletPlus(Locationx, Locationy, 0, 2));
+                    }
+                }
+                break;
+            case ELITEPLUS:
+                if (rand_if_create < 0.7) {
+                    if(rand_prop_type < 0.25) {
+                        props.add(new PropBlood(Locationx, Locationy, 0, 2));
+                    } else if (rand_prop_type < 0.5) {
+                        props.add(new PropBullet(Locationx, Locationy, 0, 2));
+                    } else if (rand_prop_type < 0.75) {
+                        props.add(new PropBomb(Locationx, Locationy, 0, 2));
+                    } else {
+                        props.add(new PropBulletPlus(Locationx, Locationy, 0, 2));
+                    }
+                }
+                break;
+            case BOSS:
+                if (rand_if_create < 2) {
+                    if(rand_prop_type < 0.25) {
+                        props.add(new PropBlood(Locationx, Locationy, 0, 2));
+                    } else if (rand_prop_type < 0.5) {
+                        props.add(new PropBullet(Locationx, Locationy, 0, 2));
+                    } else if (rand_prop_type < 0.75) {
+                        props.add(new PropBomb(Locationx, Locationy, 0, 2));
+                    } else {
+                        props.add(new PropBulletPlus(Locationx, Locationy, 0, 2));
+                    }
+                }
+                break;
+            default:break;
+        }
+    }
 
     private void shootAction() {
         shootCounter++;
@@ -172,6 +275,12 @@ public class Game extends JPanel {
     private void aircraftsMoveAction() {
         for (AbstractAircraft enemyAircraft : enemyAircrafts) {
             enemyAircraft.forward();
+        }
+    }
+
+    private void propsMoveAction() {
+        for (BaseProp prop : props) {
+            prop.forward();
         }
     }
 
@@ -217,55 +326,19 @@ public class Game extends JPanel {
                         score += 10;
                         switch (enemyAircraft.getClass().getSimpleName()) {
                             case "MobEnemy":
-                                MobEnemyKillCount++;
+                                CreatePropAction(EnemyTypeEnum.MOB, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "EliteEnemy":
-                                EliteEnemyKillCount++;
+                                CreatePropAction(EnemyTypeEnum.ELITE, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "EliteProEnemy":
-                                EliteProEnemyKillCount++;
-                                // 产生道具补给
-                                 if (Math.random() < 1) {
-                                    // 30%概率产生道具
-                                    BaseProp prop;
-                                    double rand = Math.random();
-                                    if (rand < 0.25) {
-                                        prop = new edu.hitsz.prop.PropBlood(
-                                                enemyAircraft.getLocationX(),
-                                                enemyAircraft.getLocationY(),
-                                                0,
-                                                2
-                                        );
-                                    } else if (rand < 0.5) {
-                                        prop = new edu.hitsz.prop.PropBullet(
-                                                enemyAircraft.getLocationX(),
-                                                enemyAircraft.getLocationY(),
-                                                0,
-                                                2
-                                        );
-                                    } else if (rand < 0.75) {
-                                        prop = new edu.hitsz.prop.PropBomb(
-                                                enemyAircraft.getLocationX(),
-                                                enemyAircraft.getLocationY(),
-                                                0,
-                                                2
-                                        );
-                                    } else {
-                                        prop = new edu.hitsz.prop.PropBulletPlus(
-                                                enemyAircraft.getLocationX(),
-                                                enemyAircraft.getLocationY(),
-                                                0,
-                                                2
-                                        );
-                                    }
-                                    props.add(prop);
-                                }
+                                CreatePropAction(EnemyTypeEnum.ELITEPRO, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());                                                         
                                 break;
                             case "ElitePlusEnemy":
-                                ElitePlusEnemyKillCount++;
+                                CreatePropAction(EnemyTypeEnum.ELITEPLUS, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "BossEnemy":
-                                BossEnemyKillCount++;
+                                CreatePropAction(EnemyTypeEnum.BOSS, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                         }
                     }
@@ -303,7 +376,7 @@ public class Game extends JPanel {
         enemyBullets.removeIf(AbstractFlyingObject::notValid);
         heroBullets.removeIf(AbstractFlyingObject::notValid);
         enemyAircrafts.removeIf(AbstractFlyingObject::notValid);
-        // Todo: 删除无效道具
+        props.removeIf(AbstractFlyingObject::notValid);
     }
 
     /**
@@ -344,6 +417,8 @@ public class Game extends JPanel {
         paintImageWithPositionRevised(g, enemyAircrafts);
 
         // Todo: 绘制道具
+        paintImageWithPositionRevised(g, props);
+
 
         g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2,
                 heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
