@@ -1,0 +1,65 @@
+@startuml
+
+abstract class AbstractAircraft {
+    + int maxHp
+    + int hp
+    + decreaseHp(int decrease): void
+    + increaseHp(int increase): void
+    + getHp(): int
+    + abstract shoot(): List<BaseBullet>
+}
+
+class MobEnemy extends AbstractAircraft {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class EliteEnemy extends AbstractAircraft {
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class EliteProEnemy extends AbstractAircraft {
+    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class ElitePlusEnemy extends AbstractAircraft {
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class BossEnemy extends AbstractAircraft {
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+abstract class AbstractFlyingObject {
+    + int locationX
+    + int locationY
+    + int speedX
+    + int speedY
+    + forward(): void
+    + vanish(): void
+}
+
+AbstractAircraft <|-- MobEnemy
+AbstractAircraft <|-- EliteEnemy
+AbstractAircraft <|-- EliteProEnemy
+AbstractAircraft <|-- ElitePlusEnemy
+AbstractAircraft <|-- BossEnemy
+
+BaseBullet --> AbstractFlyingObject : extends
+HeroBullet --> BaseBullet : extends
+EnemyBullet --> BaseBullet : extends
+
+Game --> AbstractAircraft : uses
+HeroController --> Game : uses
+HeroController --> HeroAircraft : uses
+
+@enduml

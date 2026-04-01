@@ -9,7 +9,7 @@ public class PropBomb extends BaseProp {
     }
         @Override
     public void effect(HeroAircraft heroAircraft) {
-        heroAircraft.decreaseHp(50);
+        // TODO: 实现道具效果
     }
 
 }

@@ -2,6 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.strategy.NoBulletStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class MobEnemy extends AbstractAircraft {
 
     public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
+        setBulletStrategy(new NoBulletStrategy()); // 设置为不发射子弹的策略
     }
 
     @Override

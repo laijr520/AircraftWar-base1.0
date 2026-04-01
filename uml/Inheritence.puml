@@ -26,14 +26,14 @@ abstract class AbstractFlyingObject {
 }
 
 abstract class AbstractAircraft {
-    # maxHp:int
-    # hp:int
-
-    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
-    + decreaseHp(int decrease):void
-    + getHp():int
-    + {abstract} shoot():List<BaseBullet>
+    + int maxHp
+    + int hp
+    + decreaseHp(int decrease): void
+    + increaseHp(int increase): void
+    + getHp(): int
+    + abstract shoot(): List<BaseBullet>
 }
+
 
 class HeroAircraft {
     - shootNum:int
@@ -46,14 +46,46 @@ class HeroAircraft {
 
 class MobEnemy {
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + forward():void
-    + shoot():List<BaseBullet>
+    + forward(): void
+    + shoot(): List<BaseBullet>
 }
 
-class BaseBullet {
+class EliteEnemy {
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class EliteProEnemy {
+    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class ElitePlusEnemy{
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class BossEnemy {
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+abstract class AbstractFlyingObject {
+    + int locationX
+    + int locationY
+    + int speedX
+    + int speedY
+    + forward(): void
+    + vanish(): void
+}
+
+class BaseBullet{
     - power:int
     + BaseBullet(int locationX, int locationY, int speedX, int speedY, int power)
-    + forward():void
     + getPower():int
 }
 
@@ -65,68 +97,18 @@ class EnemyBullet {
     + EnemyBullet(int locationX, int locationY, int speedX, int speedY, int power)
 }
 
-class Game {
-    - backGroundTop:int
-    - timer:Timer
-    - timeInterval:int
-    - heroAircraft:HeroAircraft
-    - enemyAircrafts:List<AbstractAircraft>
-    - heroBullets:List<BaseBullet>
-    - enemyBullets:List<BaseBullet>
-    - enemyMaxNumber:int
-    - enemySpawnCycle:double
-    - enemySpawnCounter:int
-    - shootCycle:double
-    - shootCounter:int
-    - score:int
-    - gameOverFlag:boolean
 
-    + Game()
-    + action():void
-    - shootAction():void
-    - bulletsMoveAction():void
-    - aircraftsMoveAction():void
-    - crashCheckAction():void
-    - postProcessAction():void
-    - checkResultAction():void
-    + paint(Graphics g):void
-}
-
-class HeroController {
-    - game:Game
-    - heroAircraft:HeroAircraft
-
-    + HeroController(Game game, HeroAircraft heroAircraft)
-}
-
-class ImageManager {
-    .. static image fields ..
-    + get(String className):BufferedImage
-    + get(Object obj):BufferedImage
-}
-
-class Main {
-    + WINDOW_WIDTH:int
-    + WINDOW_HEIGHT:int
-    + main(String[] args):void
-}
-
-AbstractAircraft <|-- HeroAircraft
-AbstractAircraft <|-- MobEnemy
-BaseBullet <|-- HeroBullet
-BaseBullet <|-- EnemyBullet
 AbstractFlyingObject <|-- AbstractAircraft
 AbstractFlyingObject <|-- BaseBullet
 
-Game o-- HeroAircraft : manages
-Game o-- "*" AbstractAircraft : enemy list
-Game o-- "*" BaseBullet : bullet lists
-Game ..> ImageManager : loads sprites
-Game ..> HeroController : listens input
+AbstractAircraft <|-- HeroAircraft
+AbstractAircraft <|-- MobEnemy
+AbstractAircraft <|-- EliteEnemy
+AbstractAircraft <|-- EliteProEnemy
+AbstractAircraft <|-- ElitePlusEnemy
+AbstractAircraft <|-- BossEnemy
 
-HeroController ..> Game
-HeroController ..> HeroAircraft
-Main ..> Game
-Main ..> ImageManager
+BaseBullet <|-- HeroBullet
+BaseBullet <|-- EnemyBullet
 
 @enduml

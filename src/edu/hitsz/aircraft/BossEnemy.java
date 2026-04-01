@@ -9,6 +9,7 @@ import edu.hitsz.bullet.BaseBullet;
 public class BossEnemy extends AbstractAircraft {
     public BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
+        // TODO: 设置Boss敌机的子弹发射策略
     }
 
     @Override

@@ -75,7 +75,7 @@ public class Game extends JPanel {
 
     }
 
-    private EnemyFactory getFactory(EnemyTypeEnum type) {
+    private EnemyFactory getFactory(AircraftTypeEnum type) {
         switch (type) {
             case MOB:
                 {
@@ -125,19 +125,19 @@ public class Game extends JPanel {
                     enemySpawnCounter = 0;
                     // 产生敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
-                        EnemyTypeEnum type = EnemyTypeEnum.MOB;
+                        AircraftTypeEnum type = AircraftTypeEnum.MOB;
 
                         if (score >= 50*(EliteEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof EliteEnemy)) {
-                            type = EnemyTypeEnum.ELITE;
+                            type = AircraftTypeEnum.ELITE;
                         }
                         if (score >= 90*(EliteProEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof EliteProEnemy)) {
-                            type = EnemyTypeEnum.ELITEPRO;
+                            type = AircraftTypeEnum.ELITEPRO;
                         }
                         if (score >= 170*(ElitePlusEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof ElitePlusEnemy)) {
-                            type = EnemyTypeEnum.ELITEPLUS;
+                            type = AircraftTypeEnum.ELITEPLUS;
                         }
                         if (score >= 300*(BossEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof BossEnemy)) {
-                            type = EnemyTypeEnum.BOSS;
+                            type = AircraftTypeEnum.BOSS;
                         }
                         EnemyFactory factory = getFactory(type);
                         enemyAircrafts.add(factory.createEnemy(
@@ -177,7 +177,7 @@ public class Game extends JPanel {
     //      Action 各部分
     //***********************
 
-    private void CreatePropAction(EnemyTypeEnum type, int Locationx, int Locationy) {
+    private void CreatePropAction(AircraftTypeEnum type, int Locationx, int Locationy) {
         double rand_prop_type = Math.random();
         double rand_if_create = Math.random();
         double createProbability = getCreateProbability(type);
@@ -189,7 +189,7 @@ public class Game extends JPanel {
         }
     }
 
-    private double getCreateProbability(EnemyTypeEnum type) {
+    private double getCreateProbability(AircraftTypeEnum type) {
         switch (type) {
             case MOB: return 0.2;
             case ELITE: return 0.4;
@@ -200,8 +200,8 @@ public class Game extends JPanel {
         }
     }
 
-    private int getPropSpeedY(EnemyTypeEnum type) {
-        return type == EnemyTypeEnum.MOB ? 5 : 2;
+    private int getPropSpeedY(AircraftTypeEnum type) {
+        return type == AircraftTypeEnum.MOB ? 5 : 2;
     }
 
     private PropTypeEnum getRandomPropType(double rand) {
@@ -292,19 +292,19 @@ public class Game extends JPanel {
                         score += 10;
                         switch (enemyAircraft.getClass().getSimpleName()) {
                             case "MobEnemy":
-                                CreatePropAction(EnemyTypeEnum.MOB, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
+                                CreatePropAction(AircraftTypeEnum.MOB, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "EliteEnemy":
-                                CreatePropAction(EnemyTypeEnum.ELITE, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
+                                CreatePropAction(AircraftTypeEnum.ELITE, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "EliteProEnemy":
-                                CreatePropAction(EnemyTypeEnum.ELITEPRO, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());                                                         
+                                CreatePropAction(AircraftTypeEnum.ELITEPRO, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());                                                         
                                 break;
                             case "ElitePlusEnemy":
-                                CreatePropAction(EnemyTypeEnum.ELITEPLUS, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
+                                CreatePropAction(AircraftTypeEnum.ELITEPLUS, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "BossEnemy":
-                                CreatePropAction(EnemyTypeEnum.BOSS, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
+                                CreatePropAction(AircraftTypeEnum.BOSS, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                         }
                     }
