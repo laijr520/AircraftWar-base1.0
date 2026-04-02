@@ -1,4 +1,12 @@
 {
     "java.dependency.packagePresentation": "hierarchical",
-    "maven.view": "hierarchical"
+    "maven.view": "hierarchical",
+    "cSpell.words": [
+        "Aircrafts",
+        "ELITEPLUS",
+        "ELITEPRO",
+        "hitsz",
+        "Locationx",
+        "Locationy"
+    ]
 }

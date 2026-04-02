@@ -10,8 +10,8 @@ public class PropBombPlus extends BaseProp {
 
     @Override
     public void effect(HeroAircraft heroAircraft) {
-        // TODO Auto-generated method stub
-        System.console().printf("PropBulletPlus effect! \n");
+        // TODO 炸弹强化道具2
+        System.console().printf("PropBombPlus effect! \n");
     }
     
 }

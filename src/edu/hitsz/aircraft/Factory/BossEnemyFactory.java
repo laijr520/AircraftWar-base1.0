@@ -1,10 +1,10 @@
-package edu.hitsz.aircraft.Factory;
+package edu.hitsz.aircraft.factory;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
 import edu.hitsz.aircraft.AbstractAircraft;
-import edu.hitsz.aircraft.BossEnemy;
+import edu.hitsz.aircraft.enemy.BossEnemy;
 
 public class BossEnemyFactory implements EnemyFactory {
     private final Random random = new Random();

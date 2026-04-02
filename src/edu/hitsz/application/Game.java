@@ -1,7 +1,11 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
-import edu.hitsz.aircraft.Factory.*;
+import edu.hitsz.aircraft.enemy.BossEnemy;
+import edu.hitsz.aircraft.enemy.EliteEnemy;
+import edu.hitsz.aircraft.enemy.ElitePlusEnemy;
+import edu.hitsz.aircraft.enemy.EliteProEnemy;
+import edu.hitsz.aircraft.factory.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.prop.*;

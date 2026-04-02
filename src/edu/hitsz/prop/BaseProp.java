@@ -32,6 +32,6 @@ public abstract class BaseProp extends AbstractFlyingObject {
             vanish();
         }
     }
-
+    //道具效果
     public abstract void effect(HeroAircraft heroAircraft) ;
 }

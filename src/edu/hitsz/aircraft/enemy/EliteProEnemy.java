@@ -1,17 +1,27 @@
-package edu.hitsz.aircraft;
+package edu.hitsz.aircraft.enemy;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.strategy.SingleEnemyBulletStrategy;
+import edu.hitsz.strategy.DoubleEnemyBulletStrategy;
 
-public class EliteEnemy extends AbstractAircraft
+public class EliteProEnemy extends AbstractAircraft
 {
-    public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
+    // //每次射击发射子弹数量
+    // private int shootNum = 2;
+
+    // //子弹威力
+    // private int power = 30;
+
+    // //子弹射击方向 (向上发射：-1，向下发射：1)
+    // private int direction = 1;
+
+    public EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
-        setBulletStrategy(new SingleEnemyBulletStrategy());
+        setBulletStrategy(new DoubleEnemyBulletStrategy());
     }
 
     @Override
@@ -29,10 +39,10 @@ public class EliteEnemy extends AbstractAircraft
      * @return 射击出的子弹List
      */
     public List<BaseBullet> shoot() {
-        if(bulletStrategy != null){
+       if(bulletStrategy != null){
             return bulletStrategy.fire(this);
         }else{
             return new LinkedList<>();
-        } 
+        }
     }
 }

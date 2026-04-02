@@ -1,13 +1,12 @@
 package edu.hitsz.application;
 
 
-import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
-import edu.hitsz.aircraft.MobEnemy;
-import edu.hitsz.aircraft.BossEnemy;
-import edu.hitsz.aircraft.ElitePlusEnemy;
-import edu.hitsz.aircraft.EliteProEnemy;
-
+import edu.hitsz.aircraft.enemy.BossEnemy;
+import edu.hitsz.aircraft.enemy.EliteEnemy;
+import edu.hitsz.aircraft.enemy.ElitePlusEnemy;
+import edu.hitsz.aircraft.enemy.EliteProEnemy;
+import edu.hitsz.aircraft.enemy.MobEnemy;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
 

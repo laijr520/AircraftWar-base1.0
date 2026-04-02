@@ -1,4 +1,4 @@
-package edu.hitsz.aircraft.Factory;
+package edu.hitsz.aircraft.factory;
 
 import edu.hitsz.aircraft.AbstractAircraft;
 

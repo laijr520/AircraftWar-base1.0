@@ -1,8 +1,8 @@
-package edu.hitsz.aircraft.Factory;
+package edu.hitsz.aircraft.factory;
 import java.util.function.Supplier;
 
 import edu.hitsz.aircraft.AbstractAircraft;
-import edu.hitsz.aircraft.ElitePlusEnemy;
+import edu.hitsz.aircraft.enemy.ElitePlusEnemy;
 
 import java.util.Random;
 
