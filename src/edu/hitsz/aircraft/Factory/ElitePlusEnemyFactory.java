@@ -1,27 +1,19 @@
 package edu.hitsz.aircraft.factory;
-import java.util.function.Supplier;
 
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.enemy.ElitePlusEnemy;
-
-import java.util.Random;
+import edu.hitsz.gameConfig.GameConfig;
 
 public class ElitePlusEnemyFactory implements EnemyFactory {
 
-    private final Random random = new Random();
-
-    private final Supplier<Integer> speedXSupplier = () -> random.nextBoolean() ? -5 : 5;
-
     @Override
-    public AbstractAircraft createEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
-        int randomSpeedX = speedXSupplier.get();
-        //使用随机生成的 speedX
+    public AbstractAircraft createEnemy(int locationX, int locationY) {
         return new ElitePlusEnemy(
             locationX, 
             locationY, 
-            randomSpeedX, 
-            5, 
-            hp
+            GameConfig.getInstance().elitePlusEnemyAircraftParams.speedX(),
+            GameConfig.getInstance().elitePlusEnemyAircraftParams.speedY(), 
+            GameConfig.getInstance().elitePlusEnemyAircraftParams.maxHp()
         );
     }
 }

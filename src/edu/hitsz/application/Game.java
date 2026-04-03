@@ -7,6 +7,7 @@ import edu.hitsz.aircraft.enemy.ElitePlusEnemy;
 import edu.hitsz.aircraft.enemy.EliteProEnemy;
 import edu.hitsz.aircraft.factory.*;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.gameConfig.GameConfig;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.prop.*;
 
@@ -64,7 +65,10 @@ public class Game extends JPanel {
         heroAircraft = HeroAircraft.getHeroAircraft(
                 Main.WINDOW_WIDTH / 2,
                 Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
-                0, 0, 100);
+                GameConfig.getInstance().heroAircraftParams.speedX(),
+                GameConfig.getInstance().heroAircraftParams.speedY(),
+                GameConfig.getInstance().heroAircraftParams.maxHp()
+        );
 
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
@@ -145,10 +149,7 @@ public class Game extends JPanel {
                         EnemyFactory factory = getFactory(type);
                         enemyAircrafts.add(factory.createEnemy(
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
-                                0,
-                                10,
-                                30
+                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05)
                         ));
                     }
                 }
@@ -292,21 +293,25 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
-                        score += 10;
                         switch (enemyAircraft.getClass().getSimpleName()) {
                             case "MobEnemy":
+                                score += 10;
                                 CreatePropAction(AircraftTypeEnum.MOB, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "EliteEnemy":
+                                score += 20;
                                 CreatePropAction(AircraftTypeEnum.ELITE, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "EliteProEnemy":
-                                CreatePropAction(AircraftTypeEnum.ELITEPRO, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());                                                         
+                                score += 30;
+                                CreatePropAction(AircraftTypeEnum.ELITEPRO, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "ElitePlusEnemy":
+                                score += 50;
                                 CreatePropAction(AircraftTypeEnum.ELITEPLUS, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "BossEnemy":
+                                score += 100;
                                 CreatePropAction(AircraftTypeEnum.BOSS, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                         }

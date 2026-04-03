@@ -1,5 +1,5 @@
 package edu.hitsz.gameConfig;
 
-public record AircraftParams(int maxHp, int speedX, int speedY) {
+public record AircraftParams(int speedX, int speedY, int maxHp) {
 
 }

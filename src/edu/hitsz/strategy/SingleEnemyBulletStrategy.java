@@ -16,7 +16,7 @@ public class SingleEnemyBulletStrategy implements AbstractBulletStrategy {
         int speedX = 0;
         int speedY = 10; // 设置子弹的速度
         int power = 2;
-        BaseBullet bullet = new EnemyBullet(x, y, speedX, speedY, power);
+        EnemyBullet bullet = new EnemyBullet(x, y, speedX, speedY, power);
         bullets.add(bullet);
         return bullets;
     }
