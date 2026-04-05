@@ -1,11 +1,10 @@
 package edu.hitsz.strategy;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DoubleEnemyBulletStrategy implements AbstractBulletStrategy {
     @Override

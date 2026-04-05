@@ -8,8 +8,8 @@ package edu.hitsz.aircraft;
 public enum AircraftTypeEnum {
     MOB,
     ELITE,
-    ELITEPRO,
-    ELITEPLUS,
+    ElitePlus,
+    ElitePro,
     BOSS,
     HERO
 }

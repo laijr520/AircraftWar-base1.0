@@ -21,14 +21,14 @@ class EliteEnemy extends AbstractAircraft {
     + shoot(): List<BaseBullet>
 }
 
-class EliteProEnemy extends AbstractAircraft {
-    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+class ElitePlusEnemy extends AbstractAircraft {
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
 }
 
-class ElitePlusEnemy extends AbstractAircraft {
-    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+class EliteProEnemy extends AbstractAircraft {
+    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
 }
@@ -50,8 +50,8 @@ abstract class AbstractFlyingObject {
 
 AbstractAircraft <|-- MobEnemy
 AbstractAircraft <|-- EliteEnemy
-AbstractAircraft <|-- EliteProEnemy
 AbstractAircraft <|-- ElitePlusEnemy
+AbstractAircraft <|-- EliteProEnemy
 AbstractAircraft <|-- BossEnemy
 
 BaseBullet --> AbstractFlyingObject : extends

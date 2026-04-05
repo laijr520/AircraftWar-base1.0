@@ -3,8 +3,8 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.aircraft.enemy.BossEnemy;
 import edu.hitsz.aircraft.enemy.EliteEnemy;
-import edu.hitsz.aircraft.enemy.ElitePlusEnemy;
 import edu.hitsz.aircraft.enemy.EliteProEnemy;
+import edu.hitsz.aircraft.enemy.ElitePlusEnemy;
 import edu.hitsz.aircraft.factory.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.gameConfig.GameConfig;
@@ -54,8 +54,8 @@ public class Game extends JPanel {
     //击败敌机数
     private int MobEnemyCount = 0;
     private int EliteEnemyCount = 0;
-    private int EliteProEnemyCount = 0;
     private int ElitePlusEnemyCount = 0;
+    private int EliteProEnemyCount = 0;
     private int BossEnemyCount = 0;
 
     //游戏结束标志
@@ -94,15 +94,15 @@ public class Game extends JPanel {
                     EliteEnemyCount++;
                     return new EliteEnemyFactory();
                 }
-            case ELITEPRO:
-                {
-                    EliteProEnemyCount++;
-                    return new EliteProEnemyFactory();
-                }
-            case ELITEPLUS:
+            case ElitePlus:
                 {
                     ElitePlusEnemyCount++;
                     return new ElitePlusEnemyFactory();
+                }
+            case ElitePro:
+                {
+                    EliteProEnemyCount++;
+                    return new EliteProEnemyFactory();
                 }
             case BOSS:
                 {
@@ -137,11 +137,11 @@ public class Game extends JPanel {
                         if (score >= 50*(EliteEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof EliteEnemy)) {
                             type = AircraftTypeEnum.ELITE;
                         }
-                        if (score >= 90*(EliteProEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof EliteProEnemy)) {
-                            type = AircraftTypeEnum.ELITEPRO;
+                        if (score >= 90*(ElitePlusEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof ElitePlusEnemy)) {
+                            type = AircraftTypeEnum.ElitePlus;
                         }
-                        if (score >= 170*(ElitePlusEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof ElitePlusEnemy)) {
-                            type = AircraftTypeEnum.ELITEPLUS;
+                        if (score >= 170*(EliteProEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof EliteProEnemy)) {
+                            type = AircraftTypeEnum.ElitePro;
                         }
                         if (score >= 300*(BossEnemyCount+1) && enemyAircrafts.stream().noneMatch(e -> e instanceof BossEnemy)) {
                             type = AircraftTypeEnum.BOSS;
@@ -197,8 +197,8 @@ public class Game extends JPanel {
         switch (type) {
             case MOB: return 0.2;
             case ELITE: return 0.4;
-            case ELITEPRO: return 0.5;
-            case ELITEPLUS: return 0.7;
+            case ElitePlus: return 0.5;
+            case ElitePro: return 0.7;
             case BOSS: return 2.0; // 总是创建
             default: return 0.0;
         }
@@ -302,13 +302,13 @@ public class Game extends JPanel {
                                 score += 20;
                                 CreatePropAction(AircraftTypeEnum.ELITE, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
-                            case "EliteProEnemy":
-                                score += 30;
-                                CreatePropAction(AircraftTypeEnum.ELITEPRO, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
-                                break;
                             case "ElitePlusEnemy":
+                                score += 30;
+                                CreatePropAction(AircraftTypeEnum.ElitePlus, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
+                                break;
+                            case "EliteProEnemy":
                                 score += 50;
-                                CreatePropAction(AircraftTypeEnum.ELITEPLUS, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
+                                CreatePropAction(AircraftTypeEnum.ElitePro, enemyAircraft.getLocationX(), enemyAircraft.getLocationY());
                                 break;
                             case "BossEnemy":
                                 score += 100;

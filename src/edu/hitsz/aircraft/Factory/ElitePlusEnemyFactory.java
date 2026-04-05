@@ -11,9 +11,9 @@ public class ElitePlusEnemyFactory implements EnemyFactory {
         return new ElitePlusEnemy(
             locationX, 
             locationY, 
-            GameConfig.getInstance().elitePlusEnemyAircraftParams.speedX(),
-            GameConfig.getInstance().elitePlusEnemyAircraftParams.speedY(), 
-            GameConfig.getInstance().elitePlusEnemyAircraftParams.maxHp()
+            GameConfig.getInstance().ElitePlusEnemyAircraftParams.speedX(), 
+            GameConfig.getInstance().ElitePlusEnemyAircraftParams.speedY(),
+            GameConfig.getInstance().ElitePlusEnemyAircraftParams.maxHp()
         );
     }
 }

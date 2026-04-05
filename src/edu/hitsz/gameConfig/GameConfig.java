@@ -11,15 +11,15 @@ public class GameConfig {
     public final AircraftParams heroAircraftParams;
     public final AircraftParams mobEnemyAircraftParams;
     public final AircraftParams eliteEnemyAircraftParams;
-    public final AircraftParams eliteProEnemyAircraftParams;
-    public final AircraftParams elitePlusEnemyAircraftParams;
+    public final AircraftParams ElitePlusEnemyAircraftParams;
+    public final AircraftParams EliteProEnemyAircraftParams;
     public final AircraftParams bossEnemyAircraftParams;
 
     public final BulletParams heroBulletParams;
     public final BulletParams mobEnemyBulletParams;
     public final BulletParams eliteEnemyBulletParams;
-    public final BulletParams eliteProEnemyBulletParams;
-    public final BulletParams elitePlusEnemyBulletParams;
+    public final BulletParams ElitePlusEnemyBulletParams;
+    public final BulletParams EliteProEnemyBulletParams;
     public final BulletParams bossEnemyBulletParams;
 
     public final PropParams propBloodParams;
@@ -32,8 +32,6 @@ public class GameConfig {
     private static final int BASE_SPEED_X = 10;
     private static final int BASE_SPEED_Y = 10;
     private static final int BASE_POWER = 100;
-    private static final int BASE_BULLET_SPEED_X = 0;
-    private static final int BASE_BULLET_SPEED_Y = 15;
 
     private final Random random = new Random();
 
@@ -46,15 +44,15 @@ public class GameConfig {
         this.heroAircraftParams = initHeroParams(difficultyFactor);
         this.mobEnemyAircraftParams = initMobEnemyParams(difficultyFactor);
         this.eliteEnemyAircraftParams = initEliteEnemyParams(difficultyFactor);
-        this.eliteProEnemyAircraftParams = initEliteProEnemyParams(difficultyFactor);
-        this.elitePlusEnemyAircraftParams = initElitePlusEnemyParams(difficultyFactor);
+        this.ElitePlusEnemyAircraftParams = initElitePlusEnemyParams(difficultyFactor);
+        this.EliteProEnemyAircraftParams = initEliteProEnemyParams(difficultyFactor);
         this.bossEnemyAircraftParams = initBossEnemyParams(difficultyFactor);
 
         this.heroBulletParams = initHeroBulletParams(difficultyFactor);
         this.mobEnemyBulletParams = initMobEnemyBulletParams(difficultyFactor);
         this.eliteEnemyBulletParams = initEliteEnemyBulletParams(difficultyFactor);
-        this.eliteProEnemyBulletParams = initEliteProEnemyBulletParams(difficultyFactor);
-        this.elitePlusEnemyBulletParams = initElitePlusEnemyBulletParams(difficultyFactor);
+        this.ElitePlusEnemyBulletParams = initElitePlusEnemyBulletParams(difficultyFactor);
+        this.EliteProEnemyBulletParams = initEliteProEnemyBulletParams(difficultyFactor);
         this.bossEnemyBulletParams = initBossEnemyBulletParams(difficultyFactor);
 
         this.propBloodParams = initPropBloodParams(difficultyFactor);
@@ -88,13 +86,13 @@ public class GameConfig {
         int speedY = (int)(0.8 * BASE_SPEED_Y);
         return new AircraftParams(0,speedY,maxHp); 
     }
-    private AircraftParams initEliteProEnemyParams(double factor) { 
+    private AircraftParams initElitePlusEnemyParams(double factor) { 
         int maxHp = (int)(0.2 * BASE_HP * factor);
         int speedX = (int)(random.nextBoolean() ? 0.3 * BASE_SPEED_X : -0.3 * BASE_SPEED_X);
         int speedY = (int)(0.8 * BASE_SPEED_Y);
         return new AircraftParams(speedX,speedY,maxHp); 
     }
-    private AircraftParams initElitePlusEnemyParams(double factor) { 
+    private AircraftParams initEliteProEnemyParams(double factor) { 
         int maxHp = (int)(0.4 * BASE_HP * factor);
         int speedX = (int)(random.nextBoolean() ? 0.6 * BASE_SPEED_X : -0.6 * BASE_SPEED_X);
         int speedY = (int)(0.6 * BASE_SPEED_Y);
@@ -117,8 +115,8 @@ public class GameConfig {
         int power = (int)(0.02 * BASE_POWER * factor);
         return new BulletParams(power);
     }
-    private BulletParams initEliteProEnemyBulletParams(double factor) { /* TODO */ return new BulletParams(0); }
     private BulletParams initElitePlusEnemyBulletParams(double factor) { /* TODO */ return new BulletParams(0); }
+    private BulletParams initEliteProEnemyBulletParams(double factor) { /* TODO */ return new BulletParams(0); }
     private BulletParams initBossEnemyBulletParams(double factor) { /* TODO */ return new BulletParams(0); }
 
     private PropParams initPropBloodParams(double factor) { /* TODO */ return new PropParams((int)(BASE_HP)); }
@@ -136,10 +134,12 @@ public class GameConfig {
 
     // 线程安全的单例获取
     public static GameConfig getInstance() {
+        GameConfig instance = GameConfig.instance;
         if (instance == null) {
             synchronized (GameConfig.class) {
+                instance = GameConfig.instance;
                 if (instance == null) {
-                    instance = new GameConfig();
+                    GameConfig.instance = instance = new GameConfig();
                 }
             }
         }

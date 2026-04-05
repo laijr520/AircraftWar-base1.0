@@ -2,12 +2,26 @@
 'https://plantuml.com/class-diagram
 
 abstract class AbstractFlyingObject {
-    + int locationX
-    + int locationY
-    + int speedX
-    + int speedY
+    # int locationX
+    # int locationY
+    # int speedX
+    # int speedY
+    # BufferedImage image
+    # int width
+    # int height
+    # boolean isValid
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
     + forward(): void
-    + vanish(): void
+    + crash(AbstractFlyingObject flyingObject): boolean
+    + setLocation(double locationX, double locationY): void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
 }
 
 abstract class AbstractFlyingObject {
@@ -39,18 +53,19 @@ abstract class AbstractAircraft {
     # int hp
     # BulletStrategy bulletStrategy:BulletStrategy
 
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + decreaseHp(int decrease): void
     + increaseHp(int increase): void
     + getHp(): int
+    + setBulletStrategy(BulletStrategy bulletStrategy): void
     + abstract shoot(): List<BaseBullet>
 }
 
 
 class HeroAircraft {
-    - shootNum:int
-    - power:int
-    - direction:int
+    - {static} instance:HeroAircraft 
     + {static} getHeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp):HeroAircraft
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)t
     + forward():void
     + shoot():List<BaseBullet>
 }
@@ -67,14 +82,14 @@ class EliteEnemy {
     + shoot(): List<BaseBullet>
 }
 
-class EliteProEnemy {
-    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+class ElitePlusEnemy {
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
 }
 
-class ElitePlusEnemy{
-    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+class EliteProEnemy{
+    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
 }
@@ -90,6 +105,7 @@ class BossEnemy {
 class BaseBullet{
     - power:int
     + BaseBullet(int locationX, int locationY, int speedX, int speedY, int power)
+    + forward(): void
     + getPower():int
 }
 
@@ -117,21 +133,84 @@ class DoubleBulletStrategy {
 class TripleBulletStrategy {
     + fire(AbstractAircraft aircraft):List<BaseBullet>
 }
+class HeroBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+
+interface EnemyFactory {
+    + createEnemy(int locationX, int locationY): AbstractAircraft
+}
+class MobEnemyFactory {
+    + createEnemy(int locationX, int locationY): MobEnemy
+}
+class EliteEnemyFactory {
+    + createEnemy(int locationX, int locationY): EliteEnemy
+}
+class ElitePlusEnemyFactory {
+    + createEnemy(int locationX, int locationY): ElitePlusEnemy
+}
+class EliteProEnemyFactory {
+    + createEnemy(int locationX, int locationY): EliteProEnemy
+}
+class BossEnemyFactory {
+    + createEnemy(int locationX, int locationY): BossEnemy
+}
+
+abstract class BaseProp {
+    + BaseProp(int locationX, int locationY, int speedX, int speedY)
+    + forward(): void
+    + effect(HeroAircraft heroAircraft): void
+}
+class PropBlood {
+    + PropBlood(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft): void
+}
+class PropBullet {
+    + PropBullet(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft): void
+}
+class PropBomb {
+    + PropBomb(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft): void
+}
+class PropBombPlus {
+    + PropBombPlus(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft): void
+}
+class PropFactory {
+    + createProp(PropTypeEnum Type, int locationX, int locationY, int speedX, int speedY): BaseProp
+}
+
+
 
 AbstractFlyingObject <|-- AbstractAircraft
 AbstractFlyingObject <|-- BaseBullet
-
+AbstractFlyingObject <|-- BaseProp
 AbstractAircraft <|-- HeroAircraft
 AbstractAircraft <|-- MobEnemy
 AbstractAircraft <|-- EliteEnemy
-AbstractAircraft <|-- EliteProEnemy
 AbstractAircraft <|-- ElitePlusEnemy
+AbstractAircraft <|-- EliteProEnemy
 AbstractAircraft <|-- BossEnemy
 
 BulletStrategy <|.. NoBulletStrategy
 BulletStrategy <|.. SingleBulletStrategy
 BulletStrategy <|.. DoubleBulletStrategy
 BulletStrategy <|.. TripleBulletStrategy
+BulletStrategy <|.. HeroBulletStrategy
+
+EnemyFactory <|.. MobEnemyFactory
+EnemyFactory <|.. EliteEnemyFactory
+EnemyFactory <|.. ElitePlusEnemyFactory
+EnemyFactory <|.. EliteProEnemyFactory
+EnemyFactory <|.. BossEnemyFactory
+
+BaseProp <|-- PropBlood
+BaseProp <|-- PropBullet
+BaseProp <|-- PropBomb
+BaseProp <|-- PropBombPlus
+
+
 BulletStrategy <--o AbstractAircraft
 
 BaseBullet <|-- HeroBullet
