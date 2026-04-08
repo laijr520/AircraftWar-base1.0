@@ -1,0 +1,50 @@
+@startuml graph
+abstract class AbstractAircraft {
+    # int maxHp
+    # int hp
+    # BulletStrategy bulletStrategy:BulletStrategy
+
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease): void
+    + increaseHp(int increase): void
+    + getHp(): int
+    + setBulletStrategy(BulletStrategy bulletStrategy): void
+    + abstract shoot(): List<BaseBullet>
+}
+
+interface BulletStrategy {
+    + abstract fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+
+class NoBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+class SingleBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+class DoubleBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+class TripleBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+class HeroBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+class HeroPlusBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+class HeroProBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+BulletStrategy <--o AbstractAircraft
+
+BulletStrategy <|.. NoBulletStrategy
+BulletStrategy <|.. SingleBulletStrategy
+BulletStrategy <|.. DoubleBulletStrategy
+BulletStrategy <|.. TripleBulletStrategy
+BulletStrategy <|.. HeroBulletStrategy
+BulletStrategy <|.. HeroPlusBulletStrategy
+BulletStrategy <|.. HeroProBulletStrategy
+
+@enduml

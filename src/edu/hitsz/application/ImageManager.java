@@ -86,7 +86,7 @@ public class ImageManager {
             CLASSNAME_IMAGE_MAP.put(edu.hitsz.prop.PropBlood.class.getName(), PROP_BLOOD_IMAGE);
             CLASSNAME_IMAGE_MAP.put(edu.hitsz.prop.PropBullet.class.getName(), PROP_BULLET_IMAGE);
             CLASSNAME_IMAGE_MAP.put(edu.hitsz.prop.PropBomb.class.getName(), PROP_BOMB_IMAGE);
-            CLASSNAME_IMAGE_MAP.put(edu.hitsz.prop.PropBombPlus.class.getName(), PROP_BULLET_PLUS_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(edu.hitsz.prop.PropBulletPlus.class.getName(), PROP_BULLET_PLUS_IMAGE);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);

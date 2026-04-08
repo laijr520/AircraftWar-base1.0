@@ -1,29 +1,32 @@
-﻿@startuml
+﻿@startuml HeroAircraftSingletonPattern
 'HeroAircraft Singleton Pattern'
 
-class AbstractAircraft {
+abstract class AbstractAircraft {
     # maxHp:int
     # hp:int
+    # BulletStrategy bulletStrategy:BulletStrategy
+
     + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
-    + decreaseHp(int decrease):void
-    + getHp():int
-    + {abstract} shoot():List<BaseBullet>
+    + decreaseHp(int decrease): void
+    + increaseHp(int increase): void
+    + getHp(): int
+    + setBulletStrategy(BulletStrategy bulletStrategy): void
+    + abstract shoot(): List<BaseBullet>
 }
 
 class HeroAircraft {
-    - static volatile HeroAircraft heroAircraft
+    - heroAircraft:static volatile HeroAircraft   // 单例实例变量,使用volatile确保线程安全
     - shootNum:int
     - power:int
     - direction:int
 
-    + static getHeroAircraft():HeroAircraft
-    + static getHeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp):HeroAircraft
-    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + static getHeroAircraft():HeroAircraft  // 静态获取方法，返回单例实例
+    + static getHeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp):HeroAircraft  // 重载获取方法
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)  // 私有构造函数，防止外部实例化
     + forward():void
     + shoot():List<BaseBullet>
 }
 
 AbstractAircraft <|-- HeroAircraft
-
 
 @enduml

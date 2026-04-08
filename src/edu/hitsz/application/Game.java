@@ -182,12 +182,19 @@ public class Game extends JPanel {
     //***********************
 
     private void CreatePropAction(AircraftTypeEnum type, int Locationx, int Locationy) {
-        double rand_prop_type = Math.random();
         double rand_if_create = Math.random();
         double createProbability = getCreateProbability(type);
-        int speedY = getPropSpeedY(type);
+        int speedY = 2;
+        if (type == AircraftTypeEnum.BOSS) {
+            // Boss敌机总是掉落道具3个
+            for (int i = 0; i < 3; i++) {
+                double rand_prop_type = Math.random();
+                props.add(PropFactory.createProp(getRandomPropType(rand_prop_type), Locationx+ (i-1) * 50, Locationy, 0, speedY));
+            }
+            return;
 
-        if (rand_if_create < createProbability) {
+        }else if (rand_if_create < createProbability) {
+            double rand_prop_type = Math.random();
             PropTypeEnum propType = getRandomPropType(rand_prop_type);
             props.add(PropFactory.createProp(propType, Locationx, Locationy, 0, speedY));
         }
@@ -199,14 +206,11 @@ public class Game extends JPanel {
             case ELITE: return 0.4;
             case ElitePlus: return 0.5;
             case ElitePro: return 0.7;
-            case BOSS: return 2.0; // 总是创建
+            case BOSS: return 3.0; // 总是创建
             default: return 0.0;
         }
     }
 
-    private int getPropSpeedY(AircraftTypeEnum type) {
-        return type == AircraftTypeEnum.MOB ? 5 : 2;
-    }
 
     private PropTypeEnum getRandomPropType(double rand) {
         if (rand < 0.25) {

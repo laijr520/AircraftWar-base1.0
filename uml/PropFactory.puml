@@ -1,0 +1,60 @@
+@startuml PropFactory
+abstract class AbstractFlyingObject {
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+abstract class BaseProp {
+    + BaseProp(int locationX, int locationY, int speedX, int speedY)
+    + forward(): void
+    + effect(HeroAircraft heroAircraft): void
+}
+class PropBlood {
+    + PropBlood(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft): void
+}
+class PropBullet {
+    + PropBullet(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft): void
+}
+class PropBomb {
+    + PropBomb(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft): void
+}
+class PropBulletPlus {
+    + PropBulletPlus(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft): void
+}
+class PropFactory {
+    + createProp(PropTypeEnum Type, int locationX, int locationY, int speedX, int speedY): BaseProp
+}
+class PropTypeEnum {
+    + BLOOD
+    + BULLET
+    + BOMB
+    + BULLET_PLUS
+}
+AbstractFlyingObject <|-- BaseProp
+BaseProp <|-- PropBlood
+BaseProp <|-- PropBullet
+BaseProp <|-- PropBomb
+BaseProp <|-- PropBulletPlus
+@enduml

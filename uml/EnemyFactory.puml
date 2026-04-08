@@ -1,0 +1,26 @@
+@startuml EnemyFactory
+interface EnemyFactory {
+    + createEnemy(int locationX, int locationY): AbstractAircraft
+}
+class MobEnemyFactory {
+    + createEnemy(int locationX, int locationY): MobEnemy
+}
+class EliteEnemyFactory {
+    + createEnemy(int locationX, int locationY): EliteEnemy
+}
+class ElitePlusEnemyFactory {
+    + createEnemy(int locationX, int locationY): ElitePlusEnemy
+}
+class EliteProEnemyFactory {
+    + createEnemy(int locationX, int locationY): EliteProEnemy
+}
+class BossEnemyFactory {
+    + createEnemy(int locationX, int locationY): BossEnemy
+}
+EnemyFactory <|.. MobEnemyFactory
+EnemyFactory <|.. EliteEnemyFactory
+EnemyFactory <|.. ElitePlusEnemyFactory
+EnemyFactory <|.. EliteProEnemyFactory
+EnemyFactory <|.. BossEnemyFactory
+
+@enduml

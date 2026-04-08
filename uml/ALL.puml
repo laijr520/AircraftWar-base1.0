@@ -1,28 +1,6 @@
 @startuml graph
 'https://plantuml.com/class-diagram
 
-abstract class AbstractFlyingObject {
-    # int locationX
-    # int locationY
-    # int speedX
-    # int speedY
-    # BufferedImage image
-    # int width
-    # int height
-    # boolean isValid
-    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
-    + forward(): void
-    + crash(AbstractFlyingObject flyingObject): boolean
-    + setLocation(double locationX, double locationY): void
-    + getLocationX():int
-    + getLocationY():int
-    + getSpeedY():int
-    + getImage():BufferedImage
-    + getWidth():int
-    + getHeight():int
-    + notValid():boolean
-    + vanish():void
-}
 
 abstract class AbstractFlyingObject {
     # locationX:int
@@ -136,6 +114,12 @@ class TripleBulletStrategy {
 class HeroBulletStrategy {
     + fire(AbstractAircraft aircraft):List<BaseBullet>
 }
+class HeroPlusBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+class HeroProBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
 
 interface EnemyFactory {
     + createEnemy(int locationX, int locationY): AbstractAircraft
@@ -173,8 +157,8 @@ class PropBomb {
     + PropBomb(int locationX, int locationY, int speedX, int speedY)
     + effect(HeroAircraft heroAircraft): void
 }
-class PropBombPlus {
-    + PropBombPlus(int locationX, int locationY, int speedX, int speedY)
+class PropBulletPlus {
+    + PropBulletPlus(int locationX, int locationY, int speedX, int speedY)
     + effect(HeroAircraft heroAircraft): void
 }
 class PropFactory {
@@ -193,11 +177,15 @@ AbstractAircraft <|-- ElitePlusEnemy
 AbstractAircraft <|-- EliteProEnemy
 AbstractAircraft <|-- BossEnemy
 
+BulletStrategy <--o AbstractAircraft
+
 BulletStrategy <|.. NoBulletStrategy
 BulletStrategy <|.. SingleBulletStrategy
 BulletStrategy <|.. DoubleBulletStrategy
 BulletStrategy <|.. TripleBulletStrategy
 BulletStrategy <|.. HeroBulletStrategy
+BulletStrategy <|.. HeroPlusBulletStrategy
+BulletStrategy <|.. HeroProBulletStrategy
 
 EnemyFactory <|.. MobEnemyFactory
 EnemyFactory <|.. EliteEnemyFactory
@@ -208,10 +196,7 @@ EnemyFactory <|.. BossEnemyFactory
 BaseProp <|-- PropBlood
 BaseProp <|-- PropBullet
 BaseProp <|-- PropBomb
-BaseProp <|-- PropBombPlus
-
-
-BulletStrategy <--o AbstractAircraft
+BaseProp <|-- PropBulletPlus
 
 BaseBullet <|-- HeroBullet
 BaseBullet <|-- EnemyBullet

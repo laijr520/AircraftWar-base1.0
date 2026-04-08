@@ -6,11 +6,12 @@ import java.util.List;
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.strategy.BossBulletStrategy;
 
 public class BossEnemy extends AbstractAircraft {
     public BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
-        // TODO: 设置Boss敌机的子弹发射策略
+        setBulletStrategy(new BossBulletStrategy());
     }
 
     @Override
@@ -24,7 +25,11 @@ public class BossEnemy extends AbstractAircraft {
 
     @Override
     public List<BaseBullet> shoot() {
-        return new LinkedList<>();
+        if(bulletStrategy != null){
+            return bulletStrategy.fire(this);
+        }else{
+            return new LinkedList<>();
+        } 
     }
 
 }

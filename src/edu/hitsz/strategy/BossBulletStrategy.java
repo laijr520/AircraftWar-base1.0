@@ -1,15 +1,13 @@
 package edu.hitsz.strategy;
 
-import edu.hitsz.aircraft.AbstractAircraft;
-import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.HeroBullet;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * 英雄机高级散射策略：环射20发子弹
- */
-public class HeroProBulletStrategy implements AbstractBulletStrategy {
+import edu.hitsz.aircraft.AbstractAircraft;
+import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.bullet.EnemyBullet;
+
+public class BossBulletStrategy implements AbstractBulletStrategy {
     @Override
     public List<BaseBullet> fire(AbstractAircraft aircraft) {
         List<BaseBullet> bullets = new LinkedList<>();
@@ -37,7 +35,7 @@ public class HeroProBulletStrategy implements AbstractBulletStrategy {
             int speedY = (int) (baseSpeed * Math.sin(angle));
 
             // 创建并添加子弹
-            BaseBullet bullet = new HeroBullet(x, y, speedX, speedY, power);
+            BaseBullet bullet = new EnemyBullet(x, y, speedX, speedY, power);
             bullets.add(bullet);
         }
 

@@ -1,6 +1,7 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.strategy.HeroPlusBulletStrategy;
 
 public class PropBullet extends BaseProp {
 
@@ -10,7 +11,6 @@ public class PropBullet extends BaseProp {
     
     @Override
     public void effect(HeroAircraft heroAircraft) {
-        // TODO 子弹强化道具1
-        System.console().printf("PropBullet effect! \n");
+        heroAircraft.setBulletStrategy(new HeroPlusBulletStrategy());
     }
 }

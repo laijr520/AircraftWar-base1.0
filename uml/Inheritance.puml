@@ -1,0 +1,105 @@
+@startuml Inheritance
+abstract class AbstractFlyingObject {
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+
+abstract class AbstractAircraft {
+    # int maxHp
+    # int hp
+    # BulletStrategy bulletStrategy:BulletStrategy
+
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease): void
+    + increaseHp(int increase): void
+    + getHp(): int
+    + setBulletStrategy(BulletStrategy bulletStrategy): void
+    + abstract shoot(): List<BaseBullet>
+}
+
+
+class HeroAircraft {
+    - {static} instance:HeroAircraft 
+    + {static} getHeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp):HeroAircraft
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)t
+    + forward():void
+    + shoot():List<BaseBullet>
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class EliteEnemy {
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class ElitePlusEnemy {
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class EliteProEnemy{
+    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+class BossEnemy {
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+}
+
+
+
+class BaseBullet{
+    - power:int
+    + BaseBullet(int locationX, int locationY, int speedX, int speedY, int power)
+    + forward(): void
+    + getPower():int
+}
+
+class HeroBullet {
+    + HeroBullet(int locationX, int locationY, int speedX, int speedY, int power)
+}
+
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY, int speedX, int speedY, int power)
+}
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractFlyingObject <|-- BaseBullet
+AbstractAircraft <|-- HeroAircraft
+AbstractAircraft <|-- MobEnemy
+AbstractAircraft <|-- EliteEnemy
+AbstractAircraft <|-- ElitePlusEnemy
+AbstractAircraft <|-- EliteProEnemy
+AbstractAircraft <|-- BossEnemy
+
+BaseBullet <|-- HeroBullet
+BaseBullet <|-- EnemyBullet
+@enduml
