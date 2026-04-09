@@ -1,8 +1,8 @@
 @startuml graph
 abstract class AbstractAircraft {
-    # int maxHp
-    # int hp
-    # BulletStrategy bulletStrategy:BulletStrategy
+    # maxHp: int
+    # hp: int
+    # bulletStrategy: BulletStrategy
 
     + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + decreaseHp(int decrease): void
@@ -12,7 +12,7 @@ abstract class AbstractAircraft {
     + abstract shoot(): List<BaseBullet>
 }
 
-interface BulletStrategy {
+interface AbstractBulletStrategy {
     + abstract fire(AbstractAircraft aircraft):List<BaseBullet>
 }
 
@@ -37,14 +37,18 @@ class HeroPlusBulletStrategy {
 class HeroProBulletStrategy {
     + fire(AbstractAircraft aircraft):List<BaseBullet>
 }
-BulletStrategy <--o AbstractAircraft
+class BossBulletStrategy {
+    + fire(AbstractAircraft aircraft):List<BaseBullet>
+}
+AbstractBulletStrategy <--o AbstractAircraft
 
-BulletStrategy <|.. NoBulletStrategy
-BulletStrategy <|.. SingleBulletStrategy
-BulletStrategy <|.. DoubleBulletStrategy
-BulletStrategy <|.. TripleBulletStrategy
-BulletStrategy <|.. HeroBulletStrategy
-BulletStrategy <|.. HeroPlusBulletStrategy
-BulletStrategy <|.. HeroProBulletStrategy
+AbstractBulletStrategy <|.. NoBulletStrategy
+AbstractBulletStrategy <|.. SingleBulletStrategy
+AbstractBulletStrategy <|.. DoubleBulletStrategy
+AbstractBulletStrategy <|.. TripleBulletStrategy
+AbstractBulletStrategy <|.. HeroBulletStrategy
+AbstractBulletStrategy <|.. HeroPlusBulletStrategy
+AbstractBulletStrategy <|.. HeroProBulletStrategy
+AbstractBulletStrategy <|.. BossBulletStrategy
 
 @enduml
