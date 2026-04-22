@@ -7,6 +7,8 @@ import edu.hitsz.aircraft.enemy.EliteProEnemy;
 import edu.hitsz.aircraft.enemy.ElitePlusEnemy;
 import edu.hitsz.aircraft.factory.*;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.dao.PlayerScoreDao;
+import edu.hitsz.gameConfig.DifficultyLevel;
 import edu.hitsz.gameConfig.GameConfig;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.prop.*;
@@ -17,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
+import java.util.function.Consumer;
 
 /**
  * 游戏主面板，游戏启动
@@ -60,6 +63,13 @@ public class Game extends JPanel {
 
     //游戏结束标志
     private boolean gameOverFlag = false;
+
+    //本局会话上下文（用于 HUD 实时排名）
+    private String playerName;
+    private int[] historicalScoresDesc = new int[0];
+
+    //游戏结束回调（默认等价旧行为）
+    private Consumer<Integer> onGameOver = s -> System.out.println("Game Over!");
 
     public Game() {
         heroAircraft = HeroAircraft.getHeroAircraft(
@@ -115,6 +125,42 @@ public class Game extends JPanel {
                     return new MobEnemyFactory();
                 }
         }
+    }
+
+    public void setOnGameOver(Consumer<Integer> cb) {
+        if (cb != null) {
+            this.onGameOver = cb;
+        }
+    }
+
+    public void configureSession(DifficultyLevel diff, String playerName, PlayerScoreDao dao) {
+        this.playerName = (playerName != null && !playerName.isEmpty()) ? playerName : null;
+        if (this.playerName != null && dao != null && diff != null) {
+            List<edu.hitsz.application.PlayerScore> hist = dao.findByDifficulty(diff);
+            historicalScoresDesc = hist.stream().mapToInt(edu.hitsz.application.PlayerScore::getScore).toArray();
+        }
+    }
+
+    public boolean isGameOver() {
+        return gameOverFlag;
+    }
+
+    public void forceGameOver() {
+        if (!gameOverFlag) {
+            timer.cancel();
+            gameOverFlag = true;
+            SwingUtilities.invokeLater(() -> onGameOver.accept(score));
+        }
+    }
+
+    private int computeRank() {
+        int rank = 1;
+        for (int s : historicalScoresDesc) {
+            if (s > score) {
+                rank++;
+            }
+        }
+        return rank;
     }
 
     /**
@@ -361,11 +407,10 @@ public class Game extends JPanel {
      * 检查游戏是否结束，若结束：关闭线程池
      */
     private void checkResultAction(){
-        // 游戏结束检查英雄机是否存活
-        if (heroAircraft.getHp() <= 0) {
-            timer.cancel(); // 取消定时器并终止所有调度任务
+        if (heroAircraft.getHp() <= 0 && !gameOverFlag) {
+            timer.cancel();
             gameOverFlag = true;
-            System.out.println("Game Over!");
+            SwingUtilities.invokeLater(() -> onGameOver.accept(score));
         }
     };
 
@@ -427,6 +472,12 @@ public class Game extends JPanel {
         g.drawString("SCORE: " + this.score, x, y);
         y = y + 20;
         g.drawString("LIFE: " + this.heroAircraft.getHp(), x, y);
+        if (playerName != null) {
+            y = y + 20;
+            g.drawString("NAME: " + playerName, x, y);
+            y = y + 20;
+            g.drawString("RANK: " + computeRank(), x, y);
+        }
     }
 
 }

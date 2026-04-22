@@ -9,11 +9,13 @@ import edu.hitsz.aircraft.enemy.ElitePlusEnemy;
 import edu.hitsz.aircraft.enemy.MobEnemy;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.gameConfig.DifficultyLevel;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -104,4 +106,34 @@ public class ImageManager {
         return get(obj.getClass().getName());
     }
 
+    private static final Map<DifficultyLevel, String> BG_PATH = new EnumMap<>(DifficultyLevel.class);
+    private static final Map<DifficultyLevel, BufferedImage> BG_CACHE = new EnumMap<>(DifficultyLevel.class);
+    static {
+        BG_PATH.put(DifficultyLevel.NORMAL, "src/images/bg.jpg");
+        BG_PATH.put(DifficultyLevel.HARD,   "src/images/bg2.jpg");
+        BG_PATH.put(DifficultyLevel.EXPERT, "src/images/bg3.jpg");
+    }
+
+    public static BufferedImage loadBackground(DifficultyLevel level) {
+        BufferedImage cached = BG_CACHE.get(level);
+        if (cached != null) {
+            return cached;
+        }
+        String path = BG_PATH.getOrDefault(level, "src/images/bg.jpg");
+        try (FileInputStream in = new FileInputStream(path)) {
+            BufferedImage img = ImageIO.read(in);
+            BG_CACHE.put(level, img);
+            return img;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return BACKGROUND_IMAGE;
+        }
+    }
+
+    public static void applyBackground(DifficultyLevel level) {
+        BufferedImage img = loadBackground(level);
+        if (img != null) {
+            BACKGROUND_IMAGE = img;
+        }
+    }
 }

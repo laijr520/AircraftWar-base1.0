@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/31696/AppData/Roaming/Code/User/workspaceStorage/a10950f92757befe4bd08ed6934d706c/redhat.java/jdt_ws/AircraftWar-base1.0_db3872c3/bin/edu/hitsz/application/**)",
+      "Read(//c/Users/31696/AppData/Roaming/Code/User/workspaceStorage/a10950f92757befe4bd08ed6934d706c/redhat.java/jdt_ws/AircraftWar-base1.0_db3872c3/bin/edu/**)"
+    ]
+  }
+}

@@ -14,6 +14,12 @@ public class HeroAircraft extends AbstractAircraft {
     //静态引用自身
     private static volatile HeroAircraft heroAircraft = null;
 
+    public static void resetInstance() {
+        synchronized (HeroAircraft.class) {
+            heroAircraft = null;
+        }
+    }
+
     public static HeroAircraft getHeroAircraft() {
         if (heroAircraft == null) {
             synchronized(HeroAircraft.class) {
