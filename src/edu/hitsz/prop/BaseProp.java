@@ -2,7 +2,6 @@ package edu.hitsz.prop;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.aircraft.HeroAircraft;
 
 /**
  * 道具基类
@@ -33,5 +32,5 @@ public abstract class BaseProp extends AbstractFlyingObject {
         }
     }
     //道具效果
-    public abstract void effect(HeroAircraft heroAircraft) ;
+    public abstract void effect(AbstractFlyingObject Object); ;
 }

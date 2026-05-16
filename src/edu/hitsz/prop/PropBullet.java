@@ -1,6 +1,7 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.strategy.HeroPlusBulletStrategy;
 
 public class PropBullet extends BaseProp {
@@ -10,7 +11,7 @@ public class PropBullet extends BaseProp {
     }
     
     @Override
-    public void effect(HeroAircraft heroAircraft) {
-        heroAircraft.setBulletStrategy(new HeroPlusBulletStrategy());
+    public void effect(AbstractFlyingObject heroAircraft) {
+        ((HeroAircraft) heroAircraft).setBulletStrategy(new HeroPlusBulletStrategy());
     }
 }

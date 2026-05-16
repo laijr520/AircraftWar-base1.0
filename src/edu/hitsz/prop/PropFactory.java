@@ -25,6 +25,8 @@ public class PropFactory {
                 return new PropBomb(locationX, locationY, speedX, speedY);
             case BULLET_PLUS:
                 return new PropBulletPlus(locationX, locationY, speedX, speedY);
+            case FREEZE:
+                return new PropFreeze(locationX, locationY, speedX, speedY);
             default:
                 throw new IllegalArgumentException("Unknown prop type: " + type);
         }

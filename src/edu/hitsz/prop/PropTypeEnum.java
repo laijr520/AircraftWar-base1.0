@@ -7,8 +7,9 @@ package edu.hitsz.prop;
 public enum PropTypeEnum {
     BLOOD,
     BULLET,
+    BULLET_PLUS,
     BOMB,
-    BULLET_PLUS
+    FREEZE
 }
 
 

@@ -1,6 +1,7 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.gameConfig.GameConfig;
 ;
 public class PropBlood extends BaseProp {
@@ -10,7 +11,7 @@ public class PropBlood extends BaseProp {
     }
 
     @Override
-    public void effect(HeroAircraft heroAircraft) {
-        heroAircraft.increaseHp(GameConfig.getInstance().propBloodParams.effectValue());
+    public void effect(AbstractFlyingObject heroAircraft) {
+        ((HeroAircraft) heroAircraft).increaseHp(GameConfig.getInstance().propBloodParams.effectValue());
     }
 }
